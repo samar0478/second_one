@@ -1,0 +1,328 @@
+/* Global Styles */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@300;400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', 'Noto Sans Devanagari', sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Lesson Content Styles */
+.lesson-content h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #1f2937;
+  border-bottom: 3px solid #3b82f6;
+  padding-bottom: 0.5rem;
+}
+
+.dark .lesson-content h2 {
+  color: #f9fafb;
+  border-bottom-color: #60a5fa;
+}
+
+.lesson-content h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 1.5rem 0 1rem 0;
+  color: #374151;
+}
+
+.dark .lesson-content h3 {
+  color: #e5e7eb;
+}
+
+.lesson-content h4 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 1rem 0 0.5rem 0;
+  color: #4b5563;
+}
+
+.dark .lesson-content h4 {
+  color: #d1d5db;
+}
+
+.lesson-content p {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+.lesson-content ul, .lesson-content ol {
+  margin: 1rem 0;
+  padding-left: 2rem;
+}
+
+.lesson-content li {
+  margin-bottom: 0.5rem;
+  font-size: 1.05rem;
+}
+
+.lesson-content strong {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.dark .lesson-content strong {
+  color: #f9fafb;
+}
+
+/* Special Content Boxes */
+.fun-fact {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border-left: 4px solid #f59e0b;
+  padding: 1rem;
+  margin: 1.5rem 0;
+  border-radius: 0 8px 8px 0;
+  font-weight: 500;
+}
+
+.dark .fun-fact {
+  background: linear-gradient(135deg, #451a03 0%, #78350f 100%);
+  border-left-color: #f59e0b;
+  color: #fbbf24;
+}
+
+.generation {
+  background: linear-gradient(135deg, #e0f2fe 0%, #b3e5fc 100%);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  border-left: 4px solid #0288d1;
+}
+
+.dark .generation {
+  background: linear-gradient(135deg, #0c4a6e 0%, #0369a1 100%);
+  border-left-color: #38bdf8;
+}
+
+.timeline {
+  background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  border-left: 4px solid #8b5cf6;
+}
+
+.dark .timeline {
+  background: linear-gradient(135deg, #4c1d95 0%, #6d28d9 100%);
+  border-left-color: #a78bfa;
+}
+
+.device-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.device {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 2px solid #0ea5e9;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.device:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(14, 165, 233, 0.15);
+}
+
+.dark .device {
+  background: linear-gradient(135deg, #0c4a6e 0%, #0369a1 100%);
+  border-color: #0ea5e9;
+}
+
+.future-tech {
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  border-left: 4px solid #10b981;
+}
+
+.dark .future-tech {
+  background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+  border-left-color: #34d399;
+}
+
+.language-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.language {
+  background: linear-gradient(135deg, #fef7ff 0%, #fae8ff 100%);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  border: 2px solid #d946ef;
+  transition: transform 0.3s ease;
+}
+
+.language:hover {
+  transform: scale(1.05);
+}
+
+.dark .language {
+  background: linear-gradient(135deg, #581c87 0%, #7c3aed 100%);
+  border-color: #c084fc;
+}
+
+.symbol-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.symbol {
+  background: linear-gradient(135deg, #fff7ed 0%, #fed7aa 100%);
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  border: 2px solid #ea580c;
+}
+
+.dark .symbol {
+  background: linear-gradient(135deg, #7c2d12 0%, #c2410c 100%);
+  border-color: #fb923c;
+}
+
+.practice-box {
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  border: 2px solid #16a34a;
+}
+
+.dark .practice-box {
+  background: linear-gradient(135deg, #14532d 0%, #166534 100%);
+  border-color: #4ade80;
+}
+
+.code-example {
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  border: 2px solid #64748b;
+}
+
+.code-example pre {
+  background: #0f172a;
+  color: #e2e8f0;
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.code-example code {
+  color: #7dd3fc;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .lesson-content h2 {
+    font-size: 1.75rem;
+  }
+  
+  .lesson-content h3 {
+    font-size: 1.25rem;
+  }
+  
+  .device-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .language-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .symbol-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Smooth Animations */
+* {
+  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #1e293b;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #475569;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+/* Print Styles for PDF */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .lesson-content {
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+  }
+  
+  .fun-fact, .generation, .timeline, .device, .future-tech, .language, .symbol, .practice-box {
+    background: #f8f9fa !important;
+    color: black !important;
+    border: 1px solid #dee2e6 !important;
+  }
+  
+  .code-example {
+    background: #f8f9fa !important;
+    border: 1px solid #dee2e6 !important;
+  }
+  
+  .code-example pre {
+    background: #ffffff !important;
+    color: #000000 !important;
+    border: 1px solid #dee2e6 !important;
+  }
+}
