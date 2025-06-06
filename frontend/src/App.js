@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import OfflineIndicator from './components/OfflineIndicator';
+import InstallPrompt from './components/InstallPrompt';
+import useServiceWorker from './hooks/useServiceWorker';
 
 // Sample Content Data - Easy to modify!
 const SAMPLE_CONTENT = {
@@ -54,7 +57,6 @@ const SAMPLE_CONTENT = {
                   </div>
                 `
               },
-              
               {
                 id: "computer-history",
                 title: "History of Computers",
@@ -172,67 +174,6 @@ const SAMPLE_CONTENT = {
                     <li><strong>Eye Tracking:</strong> Control using eye movements</li>
                     <li><strong>Brain-Computer Interface:</strong> Direct neural control</li>
                   </ul>
-                `
-              },
-              {
-                id:"hello",
-                title: "Hello",
-                content: `
-                  
-                            <h2>Lesson 1.1: What is HTML? 📄</h2>
-                            <p><strong>Objective:</strong> Understand HTML as a webpage’s skeleton.</p>
-
-                            <h3>Real-Life Example:</h3>
-                            <blockquote>
-                              Imagine building a house. HTML is the <strong>bricks and framework</strong> (like walls, doors), 
-                              CSS is the <strong>paint and decor</strong>, and JavaScript is the <strong>electricity</strong> (makes things work).
-                            </blockquote>
-
-                            <h3>Steps:</h3>
-                            <ol>
-                              <li>
-                                <strong>HTML = HyperText Markup Language</strong>
-                                <ul>
-                                  <li><strong>HyperText:</strong> Clickable links (like WhatsApp group links)</li>
-                                  <li><strong>Markup:</strong> Tags like <code>&lt;title&gt;</code> to label parts of a webpage</li>
-                                </ul>
-                              </li>
-                              <li>
-                                <strong>Basic Structure:</strong>
-                                <pre><code>&lt;!DOCTYPE html&gt;
-                          &lt;html&gt;
-                          &lt;head&gt;
-                            &lt;title&gt;My First Page&lt;/title&gt;
-                          &lt;/head&gt;
-                          &lt;body&gt;
-                            &lt;p&gt;Hello world!&lt;/p&gt;
-                          &lt;/body&gt;
-                          &lt;/html&gt;
-                                </code></pre>
-                              </li>
-                            </ol>
-
-                            <h3>Common Mistakes:</h3>
-                            <ul>
-                              <li>⚠️ Forgetting to close tags like <code>&lt;p&gt;</code></li>
-                              <li>⚠️ Typing <code>&lt;htm&gt;</code> instead of <code>&lt;html&gt;</code></li>
-                            </ul>
-
-                            <h3>MCQ:</h3>
-                            <p>1. HTML is used for:</p>
-                            <ul>
-                              <li>a) Styling pages</li>
-                              <li><strong>b) Creating structure ✅</strong></li>
-                              <li>c) Playing music</li>
-                            </ul>
-
-                            <div class="tip">
-                              💡 <strong>Teacher’s Tip:</strong> Tags are like <em>Namaste</em> 🙏 – start with <code>&lt;tag&gt;</code> and end with <code>&lt;/tag&gt;</code>!
-                            </div>
-                        
-
-                
-                
                 `
               },
               {
@@ -865,6 +806,17 @@ function App() {
     const saved = localStorage.getItem('visitedLessons');
     return saved ? JSON.parse(saved) : [];
   });
+  const [showOfflineSettings, setShowOfflineSettings] = useState(false);
+
+  // Service Worker integration
+  const { 
+    isServiceWorkerReady, 
+    isServiceWorkerUpdated, 
+    cacheSize, 
+    updateServiceWorker,
+    updateCacheSize,
+    clearCache 
+  } = useServiceWorker();
 
   // Force re-render when language changes
   const [, forceUpdate] = useState({});
@@ -946,6 +898,24 @@ function App() {
   if (!currentGrade) {
     return (
       <div className={`min-h-screen transition-colors duration-300 ${darkMode ? 'dark bg-gray-900' : 'bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50'}`}>
+        {/* Offline Indicator */}
+        <OfflineIndicator />
+        
+        {/* Service Worker Update Banner */}
+        {isServiceWorkerUpdated && (
+          <div className="fixed top-0 left-0 right-0 z-50 bg-blue-500 text-white px-4 py-3 text-center">
+            <div className="flex items-center justify-center space-x-4">
+              <span>A new version is available!</span>
+              <button
+                onClick={updateServiceWorker}
+                className="bg-white text-blue-500 px-3 py-1 rounded text-sm font-medium hover:bg-gray-100 transition-colors"
+              >
+                Update Now
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* Header */}
         <header className={`sticky top-0 z-50 transition-colors duration-300 ${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white/80 border-blue-100'} backdrop-blur-md border-b`}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -955,9 +925,27 @@ function App() {
                 <h1 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                   {content.siteName}
                 </h1>
+                {/* Offline Status Indicator */}
+                {isServiceWorkerReady && (
+                  <div className="flex items-center space-x-1">
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                    <span className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                      Offline Ready
+                    </span>
+                  </div>
+                )}
               </div>
               
               <div className="flex items-center space-x-4">
+                {/* Offline Settings Button */}
+                <button
+                  onClick={() => setShowOfflineSettings(!showOfflineSettings)}
+                  className={`p-2 rounded-lg transition-colors ${darkMode ? 'bg-gray-700 text-gray-400 hover:text-gray-300' : 'bg-gray-100 text-gray-600 hover:text-gray-700'}`}
+                  title="Offline Settings"
+                >
+                  ⚙️
+                </button>
+
                 {/* Language Toggle */}
                 <div className="flex items-center space-x-1 bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
                   <button
@@ -983,6 +971,68 @@ function App() {
                 </button>
               </div>
             </div>
+            
+            {/* Offline Settings Panel */}
+            {showOfflineSettings && (
+              <div className={`absolute top-full left-0 right-0 ${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} border-t shadow-lg p-4`}>
+                <div className="max-w-7xl mx-auto">
+                  <h3 className={`text-lg font-semibold mb-3 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                    Offline Settings
+                  </h3>
+                  <div className="grid md:grid-cols-3 gap-4">
+                    <div className={`p-3 rounded-lg ${darkMode ? 'bg-gray-700' : 'bg-gray-50'}`}>
+                      <div className="flex items-center space-x-2 mb-2">
+                        <span className="text-green-500">✓</span>
+                        <span className={`text-sm font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                          App Status
+                        </span>
+                      </div>
+                      <p className={`text-xs ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                        {isServiceWorkerReady ? 'Ready for offline use' : 'Setting up offline mode...'}
+                      </p>
+                    </div>
+                    
+                    <div className={`p-3 rounded-lg ${darkMode ? 'bg-gray-700' : 'bg-gray-50'}`}>
+                      <div className="flex items-center space-x-2 mb-2">
+                        <span className="text-blue-500">💾</span>
+                        <span className={`text-sm font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                          Cache Size
+                        </span>
+                      </div>
+                      <p className={`text-xs ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                        {cacheSize}
+                      </p>
+                      <div className="flex space-x-2 mt-2">
+                        <button
+                          onClick={updateCacheSize}
+                          className="text-xs px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+                        >
+                          Refresh
+                        </button>
+                        <button
+                          onClick={clearCache}
+                          className="text-xs px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
+                        >
+                          Clear
+                        </button>
+                      </div>
+                    </div>
+                    
+                    <div className={`p-3 rounded-lg ${darkMode ? 'bg-gray-700' : 'bg-gray-50'}`}>
+                      <div className="flex items-center space-x-2 mb-2">
+                        <span className="text-purple-500">📱</span>
+                        <span className={`text-sm font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                          Install App
+                        </span>
+                      </div>
+                      <p className={`text-xs ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                        Install for the best offline experience
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </header>
 
@@ -991,7 +1041,7 @@ function App() {
           <div className="text-center mb-12">
             <div className="mb-8">
               <img 
-                src="https://images.pexels.com/photos/7869041/pexels-photo-7869041.jpeg" 
+                src="images/front.png" 
                 alt="Students learning programming"
                 className="mx-auto w-full max-w-md rounded-2xl shadow-2xl"
               />
